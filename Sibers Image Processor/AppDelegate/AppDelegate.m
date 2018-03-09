@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "SIPFiltersHistoryVC.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,15 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	// Override point for customization after application launch.
+	
+	// Implementing root view contorller in navigation controller
+	SIPFiltersHistoryVC *filtersVC = [[SIPFiltersHistoryVC alloc] init];
+	UINavigationController *navC = [[UINavigationController alloc] initWithRootViewController:filtersVC];
+	UIWindow *mainWindow = [[UIWindow alloc] initWithFrame: UIScreen.mainScreen.bounds];
+	mainWindow.rootViewController = navC;
+	self.window = mainWindow;
+	[self.window makeKeyAndVisible];
+	
 	return YES;
 }
 

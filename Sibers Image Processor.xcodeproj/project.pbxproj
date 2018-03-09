@@ -7,25 +7,46 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76140527204FC93900AE1980 /* SIPPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76140526204FC93900AE1980 /* SIPPhotoPickerViewController.m */; };
+		7614052C205024D900AE1980 /* UIImage + Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7614052B205024D900AE1980 /* UIImage + Ext.m */; };
+		7614053120502D7C00AE1980 /* SIPImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7614053020502D7C00AE1980 /* SIPImageProcessor.m */; };
+		7614053520503F1600AE1980 /* SIPProcessedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7614053420503F1600AE1980 /* SIPProcessedObject.m */; };
 		76932285204D9E040066DDA9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76932284204D9E040066DDA9 /* AppDelegate.m */; };
-		76932288204D9E040066DDA9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76932287204D9E040066DDA9 /* ViewController.m */; };
-		7693228B204D9E040066DDA9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 76932289204D9E040066DDA9 /* Main.storyboard */; };
 		7693228D204D9E040066DDA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7693228C204D9E040066DDA9 /* Assets.xcassets */; };
 		76932290204D9E040066DDA9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7693228E204D9E040066DDA9 /* LaunchScreen.storyboard */; };
 		76932293204D9E040066DDA9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76932292204D9E040066DDA9 /* main.m */; };
+		76BA9EC0204F851100A1DEB8 /* SIPFiltersHistoryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BA9EBE204F851100A1DEB8 /* SIPFiltersHistoryVC.m */; };
+		76BA9EC1204F851100A1DEB8 /* SIPFiltersHistoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76BA9EBF204F851100A1DEB8 /* SIPFiltersHistoryVC.xib */; };
+		76BA9EC6204F878600A1DEB8 /* SIPFilterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BA9EC5204F878600A1DEB8 /* SIPFilterButton.m */; };
+		76BA9ECE204FA23A00A1DEB8 /* SIPFiltersHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 76BA9ECC204FA23A00A1DEB8 /* SIPFiltersHistoryCell.m */; };
+		76BA9ECF204FA23A00A1DEB8 /* SIPFiltersHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 76BA9ECD204FA23A00A1DEB8 /* SIPFiltersHistoryCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		76140525204FC93900AE1980 /* SIPPhotoPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPPhotoPickerViewController.h; sourceTree = "<group>"; };
+		76140526204FC93900AE1980 /* SIPPhotoPickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIPPhotoPickerViewController.m; sourceTree = "<group>"; };
+		7614052A205024D900AE1980 /* UIImage + Ext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage + Ext.h"; sourceTree = "<group>"; };
+		7614052B205024D900AE1980 /* UIImage + Ext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage + Ext.m"; sourceTree = "<group>"; };
+		7614052F20502D7C00AE1980 /* SIPImageProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPImageProcessor.h; sourceTree = "<group>"; };
+		7614053020502D7C00AE1980 /* SIPImageProcessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIPImageProcessor.m; sourceTree = "<group>"; };
+		7614053320503F1600AE1980 /* SIPProcessedObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPProcessedObject.h; sourceTree = "<group>"; };
+		7614053420503F1600AE1980 /* SIPProcessedObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIPProcessedObject.m; sourceTree = "<group>"; };
+		7614053620503FB400AE1980 /* SIPImageProcessorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPImageProcessorDelegate.h; sourceTree = "<group>"; };
 		76932280204D9E040066DDA9 /* Sibers Image Processor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sibers Image Processor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		76932283204D9E040066DDA9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		76932284204D9E040066DDA9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		76932286204D9E040066DDA9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		76932287204D9E040066DDA9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		7693228A204D9E040066DDA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7693228C204D9E040066DDA9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7693228F204D9E040066DDA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		76932291204D9E040066DDA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76932292204D9E040066DDA9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		76BA9EBD204F851100A1DEB8 /* SIPFiltersHistoryVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPFiltersHistoryVC.h; sourceTree = "<group>"; };
+		76BA9EBE204F851100A1DEB8 /* SIPFiltersHistoryVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIPFiltersHistoryVC.m; sourceTree = "<group>"; };
+		76BA9EBF204F851100A1DEB8 /* SIPFiltersHistoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SIPFiltersHistoryVC.xib; sourceTree = "<group>"; };
+		76BA9EC4204F878600A1DEB8 /* SIPFilterButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPFilterButton.h; sourceTree = "<group>"; };
+		76BA9EC5204F878600A1DEB8 /* SIPFilterButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIPFilterButton.m; sourceTree = "<group>"; };
+		76BA9ECB204FA23A00A1DEB8 /* SIPFiltersHistoryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPFiltersHistoryCell.h; sourceTree = "<group>"; };
+		76BA9ECC204FA23A00A1DEB8 /* SIPFiltersHistoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIPFiltersHistoryCell.m; sourceTree = "<group>"; };
+		76BA9ECD204FA23A00A1DEB8 /* SIPFiltersHistoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SIPFiltersHistoryCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +60,69 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		76140524204FC91400AE1980 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				761405372052340900AE1980 /* TimerDelay */,
+				7614053220503EEB00AE1980 /* ProcessedImage */,
+				7614052E20502D5E00AE1980 /* ImageProcessor */,
+				7614052820501C8D00AE1980 /* ImagePicker */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		7614052820501C8D00AE1980 /* ImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				76140525204FC93900AE1980 /* SIPPhotoPickerViewController.h */,
+				76140526204FC93900AE1980 /* SIPPhotoPickerViewController.m */,
+			);
+			path = ImagePicker;
+			sourceTree = "<group>";
+		};
+		761405292050249C00AE1980 /* Utilites */ = {
+			isa = PBXGroup;
+			children = (
+				7614052D20502D1200AE1980 /* UIImage + Ext */,
+			);
+			path = Utilites;
+			sourceTree = "<group>";
+		};
+		7614052D20502D1200AE1980 /* UIImage + Ext */ = {
+			isa = PBXGroup;
+			children = (
+				7614052A205024D900AE1980 /* UIImage + Ext.h */,
+				7614052B205024D900AE1980 /* UIImage + Ext.m */,
+			);
+			path = "UIImage + Ext";
+			sourceTree = "<group>";
+		};
+		7614052E20502D5E00AE1980 /* ImageProcessor */ = {
+			isa = PBXGroup;
+			children = (
+				7614052F20502D7C00AE1980 /* SIPImageProcessor.h */,
+				7614053020502D7C00AE1980 /* SIPImageProcessor.m */,
+				7614053620503FB400AE1980 /* SIPImageProcessorDelegate.h */,
+			);
+			path = ImageProcessor;
+			sourceTree = "<group>";
+		};
+		7614053220503EEB00AE1980 /* ProcessedImage */ = {
+			isa = PBXGroup;
+			children = (
+				7614053320503F1600AE1980 /* SIPProcessedObject.h */,
+				7614053420503F1600AE1980 /* SIPProcessedObject.m */,
+			);
+			path = ProcessedImage;
+			sourceTree = "<group>";
+		};
+		761405372052340900AE1980 /* TimerDelay */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TimerDelay;
+			sourceTree = "<group>";
+		};
 		76932277204D9E040066DDA9 = {
 			isa = PBXGroup;
 			children = (
@@ -58,17 +142,80 @@
 		76932282204D9E040066DDA9 /* Sibers Image Processor */ = {
 			isa = PBXGroup;
 			children = (
+				761405292050249C00AE1980 /* Utilites */,
+				76140524204FC91400AE1980 /* Classes */,
+				76BA9EC9204F899700A1DEB8 /* AppDelegate */,
+				76BA9EC7204F879000A1DEB8 /* Views */,
+				76BA9EC2204F851700A1DEB8 /* ViewControllers */,
+				7693228C204D9E040066DDA9 /* Assets.xcassets */,
+				76BA9ECA204F89A400A1DEB8 /* Support files */,
+			);
+			path = "Sibers Image Processor";
+			sourceTree = "<group>";
+		};
+		76BA9EC2204F851700A1DEB8 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				76BA9EC3204F852B00A1DEB8 /* FiltersHistory */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		76BA9EC3204F852B00A1DEB8 /* FiltersHistory */ = {
+			isa = PBXGroup;
+			children = (
+				76BA9EBD204F851100A1DEB8 /* SIPFiltersHistoryVC.h */,
+				76BA9EBE204F851100A1DEB8 /* SIPFiltersHistoryVC.m */,
+				76BA9EBF204F851100A1DEB8 /* SIPFiltersHistoryVC.xib */,
+			);
+			path = FiltersHistory;
+			sourceTree = "<group>";
+		};
+		76BA9EC7204F879000A1DEB8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				76BA9EC8204F879F00A1DEB8 /* FilterButton */,
+				76BA9ED0204FA23F00A1DEB8 /* FiltersHistoryCell */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		76BA9EC8204F879F00A1DEB8 /* FilterButton */ = {
+			isa = PBXGroup;
+			children = (
+				76BA9EC4204F878600A1DEB8 /* SIPFilterButton.h */,
+				76BA9EC5204F878600A1DEB8 /* SIPFilterButton.m */,
+			);
+			path = FilterButton;
+			sourceTree = "<group>";
+		};
+		76BA9EC9204F899700A1DEB8 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
 				76932283204D9E040066DDA9 /* AppDelegate.h */,
 				76932284204D9E040066DDA9 /* AppDelegate.m */,
-				76932286204D9E040066DDA9 /* ViewController.h */,
-				76932287204D9E040066DDA9 /* ViewController.m */,
-				76932289204D9E040066DDA9 /* Main.storyboard */,
-				7693228C204D9E040066DDA9 /* Assets.xcassets */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		76BA9ECA204F89A400A1DEB8 /* Support files */ = {
+			isa = PBXGroup;
+			children = (
 				7693228E204D9E040066DDA9 /* LaunchScreen.storyboard */,
 				76932291204D9E040066DDA9 /* Info.plist */,
 				76932292204D9E040066DDA9 /* main.m */,
 			);
-			path = "Sibers Image Processor";
+			path = "Support files";
+			sourceTree = "<group>";
+		};
+		76BA9ED0204FA23F00A1DEB8 /* FiltersHistoryCell */ = {
+			isa = PBXGroup;
+			children = (
+				76BA9ECC204FA23A00A1DEB8 /* SIPFiltersHistoryCell.m */,
+				76BA9ECD204FA23A00A1DEB8 /* SIPFiltersHistoryCell.xib */,
+				76BA9ECB204FA23A00A1DEB8 /* SIPFiltersHistoryCell.h */,
+			);
+			path = FiltersHistoryCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,6 +244,7 @@
 		76932278204D9E040066DDA9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = SIP;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Taras Minin";
 				TargetAttributes = {
@@ -130,8 +278,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				76932290204D9E040066DDA9 /* LaunchScreen.storyboard in Resources */,
+				76BA9ECF204FA23A00A1DEB8 /* SIPFiltersHistoryCell.xib in Resources */,
 				7693228D204D9E040066DDA9 /* Assets.xcassets in Resources */,
-				7693228B204D9E040066DDA9 /* Main.storyboard in Resources */,
+				76BA9EC1204F851100A1DEB8 /* SIPFiltersHistoryVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,23 +291,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76932288204D9E040066DDA9 /* ViewController.m in Sources */,
+				76BA9EC0204F851100A1DEB8 /* SIPFiltersHistoryVC.m in Sources */,
 				76932293204D9E040066DDA9 /* main.m in Sources */,
+				7614053520503F1600AE1980 /* SIPProcessedObject.m in Sources */,
+				76BA9ECE204FA23A00A1DEB8 /* SIPFiltersHistoryCell.m in Sources */,
+				76BA9EC6204F878600A1DEB8 /* SIPFilterButton.m in Sources */,
+				76140527204FC93900AE1980 /* SIPPhotoPickerViewController.m in Sources */,
+				7614053120502D7C00AE1980 /* SIPImageProcessor.m in Sources */,
 				76932285204D9E040066DDA9 /* AppDelegate.m in Sources */,
+				7614052C205024D900AE1980 /* UIImage + Ext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		76932289204D9E040066DDA9 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7693228A204D9E040066DDA9 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		7693228E204D9E040066DDA9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -218,7 +365,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -267,7 +414,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -280,11 +427,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D82HCVQN26;
-				INFOPLIST_FILE = "Sibers Image Processor/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sibers Image Processor/Support files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tarmin.Sibers-Image-Processor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -294,11 +442,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D82HCVQN26;
-				INFOPLIST_FILE = "Sibers Image Processor/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sibers Image Processor/Support files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.tarmin.Sibers-Image-Processor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
