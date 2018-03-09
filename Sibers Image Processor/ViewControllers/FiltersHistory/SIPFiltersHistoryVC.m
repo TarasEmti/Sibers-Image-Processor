@@ -88,7 +88,7 @@
 	if (_chosenImageView.image == nil) {
 		return;
 	}
-	
+	_imageProcessor = [[SIPImageProcessor alloc] initWithImage:_chosenImageView.image];
 	// Unlike in Swift we can't do switch String or even make an enum with strings associated properties so we just need to be patient
 	ProcessorFilter filter;
 	if (sender.currentTitle == [SIPImageProcessor processorFilterString:ProcessorFilterMonochrome]) {
@@ -115,28 +115,37 @@
 	_processedObjects = [NSArray arrayWithArray:tempArray];
 	[_filtersHistoryTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
 									withRowAnimation:UITableViewRowAnimationTop];
+	[_filtersHistoryTableView reloadData];
 	[_filtersHistoryTableView endUpdates];
 	
-	// Second - start a background thread to process image
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-		
-		[_imageProcessor applyFilter:filter
-					   progressBlock:^(CGFloat progressFloat) {
-						   newObject.processingProgress = progressFloat;
-						   [self updateCellWithObject:newObject];
-					   }
-					 completionBlock:^(UIImage *outputImage) {
-						 newObject.image = outputImage;
-						 [self updateCellWithObject:newObject];
-					 }
-		 ];
-	});
+	// Start a new thread to process image
+	NSThread *newThread = [[NSThread alloc] initWithTarget:self selector:@selector(applyFilter:) object:[NSNumber numberWithInt:filter]];
+	[newThread start];
+}
+
+- (void)applyFilter:(NSNumber *)filterInt {
+	
+	int filter = [filterInt intValue];
+	SIPProcessedObject *newObject = [_processedObjects lastObject];
+	// Second - apply filter and wait for a callback
+	[_imageProcessor applyFilter:filter
+				   progressBlock:^(CGFloat progressFloat) {
+					   newObject.processingProgress = progressFloat;
+					   [self updateCellWithObject:newObject];
+				   }
+				 completionBlock:^(UIImage *outputImage) {
+					 newObject.image = outputImage;
+					 [self updateCellWithObject:newObject];
+				 }
+	 ];
 }
 
 - (void)updateCellWithObject:(SIPProcessedObject *)object {
-	NSUInteger index = [_processedObjects indexOfObject:object];
-	NSUInteger row = [self rowForObjectAtIndex:index];
-	[_filtersHistoryTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		NSUInteger index = [_processedObjects indexOfObject:object];
+		NSUInteger row = [self rowForObjectAtIndex:index];
+		[_filtersHistoryTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+	});
 }
 
 - (NSUInteger)rowForObjectAtIndex:(NSUInteger)index {

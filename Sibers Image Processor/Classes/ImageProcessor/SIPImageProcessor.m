@@ -29,14 +29,30 @@
 - (void)applyFilter:(ProcessorFilter)filter progressBlock:(void (^_Nonnull)(CGFloat))progress completionBlock:(void (^_Nullable)(UIImage *))completion {
 	
 	dispatch_group_t filterProcessing = dispatch_group_create();
+	
 	// Simulated delay in between 5 and 30 seconds
+	int delay = arc4random() % 10 + 5;
+	__block UIImage *output;
 	
 	dispatch_group_enter(filterProcessing);
-	int delay = arc4random() % 35 + 5;
-	NSTimer *timer = [NSTimer timerWithTimeInterval:updateInterval target:self selector:@selector(updateTimer:) userInfo:nil repeats:YES];
-	dispatch_group_leave(filterProcessing);
+	[self filterProcessing:filter completionBlock:^(UIImage *filteredImage) {
+		output = filteredImage;
+		dispatch_group_leave(filterProcessing);
+	}];
 	
 	dispatch_group_enter(filterProcessing);
+	[self simulateProgress:delay progressBlock:^(CGFloat progressFloat) {
+		progress(progressFloat);
+	} completionBlock:^{
+		dispatch_group_leave(filterProcessing);
+	}];
+	
+	dispatch_group_notify(filterProcessing, dispatch_get_main_queue(), ^{
+		completion(output);
+	});
+}
+
+- (void)filterProcessing:(ProcessorFilter)filter completionBlock:(void (^_Nullable)(UIImage *))completion {
 	UIImage *output;
 	switch (filter) {
 		case ProcessorFilterMonochrome:
@@ -59,12 +75,21 @@
 			output = [self colorInverseImage];
 			break;
 	}
-	dispatch_group_leave(filterProcessing);
+	completion(output);
+}
+
+- (void)simulateProgress:(int)delay progressBlock:(void (^_Nonnull)(CGFloat))progress completionBlock:(void (^_Nullable)(void))completion {
 	
-	dispatch_group_notify(filterProcessing, dispatch_get_main_queue(), ^{
-		progress(1.0);
-		completion(output);
-	});
+	CGFloat timePassed = 0.0;
+	while (timePassed < delay) {
+		[NSThread sleepForTimeInterval: updateInterval];
+		CGFloat prog = timePassed / delay;
+		dispatch_async(dispatch_get_main_queue(), ^{
+			progress(prog);
+		});
+		timePassed += updateInterval;
+	}
+	completion();
 }
 
 + (NSString *_Nonnull)processorFilterString:(ProcessorFilter)filter {
@@ -91,20 +116,6 @@
 			break;
 	}
 	return filterName;
-}
-
-- (void)updateTimer:(NSTimer *)timer {
-	
-	NSTimeInterval timePassed = timer.fireDate.timeIntervalSinceNow;
-	/*
-	if (timePassed < delay) {
-		CGFloat progressFloat = timePassed / delay;
-		//progress(progressFloat);
-	} else {
-		[timer invalidate];
-		//dispatch_group_leave(filterProcessing);
-	}
-	 */
 }
 
 - (UIImage *)monochromeImage {
