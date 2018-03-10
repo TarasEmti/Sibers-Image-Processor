@@ -31,7 +31,7 @@
 	dispatch_group_t filterProcessing = dispatch_group_create();
 	
 	// Simulated delay in between 5 and 30 seconds
-	int delay = arc4random() % 10 + 5;
+	int delay = arc4random() % 25 + 5;
 	__block UIImage *output;
 	
 	dispatch_group_enter(filterProcessing);
