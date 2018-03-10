@@ -29,6 +29,12 @@
 	self.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
 	self.numberOfLines = 3;
 	self.alpha = 0.0;
+	self.adjustsFontSizeToFitWidth = YES;
+}
+
+- (void)drawTextInRect:(CGRect)rect {
+	UIEdgeInsets insets = UIEdgeInsetsMake(5, 5, 5, 5);
+	[super drawTextInRect:UIEdgeInsetsInsetRect(rect, insets)];
 }
 
 - (void)startAppearingAnimation {

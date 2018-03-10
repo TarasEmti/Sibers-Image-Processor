@@ -14,8 +14,12 @@
 	
 	self.layer.borderWidth = 1.0;
 	self.layer.borderColor = [UIColor blackColor].CGColor;
+	
+	// Title cutomization
 	self.titleLabel.textColor = [UIColor blackColor];
-	self.titleEdgeInsets = UIEdgeInsetsMake(5.0, 10.0, 5.0, 10.0);
+	self.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+	self.titleLabel.adjustsFontSizeToFitWidth = YES;
+	self.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 5);
 }
 
 @end

@@ -16,6 +16,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SIPFiltersHistoryVC">
             <connections>
                 <outlet property="chosenImageView" destination="JMA-eF-33g" id="zzc-P8-lvF"/>
+                <outlet property="filtersHistoryLabel" destination="kgq-l7-xBm" id="fDn-Db-Fnw"/>
                 <outlet property="filtersHistoryTableView" destination="QuX-LL-2dz" id="E0k-Cy-EmN"/>
                 <outlet property="hMirrorFilterButton" destination="ypD-Sp-n5B" id="mAH-wj-vDQ"/>
                 <outlet property="inverseFlterButton" destination="8ms-zh-Zfb" id="bXw-T9-BTj"/>
@@ -96,7 +97,7 @@
                         <action selector="pickImageButtonTouchUp:" destination="-1" eventType="touchUpInside" id="b0h-2h-t7u"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filters History:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kgq-l7-xBm">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filters History:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kgq-l7-xBm">
                     <rect key="frame" x="141" y="314.5" width="93.5" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <nil key="textColor"/>

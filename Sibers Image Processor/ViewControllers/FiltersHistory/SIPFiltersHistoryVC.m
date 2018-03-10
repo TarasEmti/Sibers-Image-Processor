@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet SIPFilterButton *hMirrorFilterButton;
 @property (weak, nonatomic) IBOutlet SIPFilterButton *leftHalfMirrorFilterButton;
 @property (weak, nonatomic) IBOutlet SIPFilterButton *pickImageButton;
+@property (weak, nonatomic) IBOutlet UILabel *filtersHistoryLabel;
 
 @property (strong, nonatomic) NSMutableArray<SIPProcessedObject *> *processedObjects;
 @property (strong, nonatomic) SIPImageProcessor *imageProcessor;
@@ -47,7 +48,7 @@
 	self.navigationController.navigationBarHidden = YES;
 	self.view.backgroundColor = [UIColor whiteColor];
 	
-	// Set filter titles
+	// Set titles
 	[_monochromeFilterButton setTitle: [SIPImageProcessor processorFilterString:ProcessorFilterMonochrome]
 							 forState: UIControlStateNormal];
 	[_hMirrorFilterButton setTitle: [SIPImageProcessor processorFilterString:ProcessorFilterHMirror]
@@ -58,7 +59,9 @@
 						 forState: UIControlStateNormal];
 	[_leftHalfMirrorFilterButton setTitle: [SIPImageProcessor processorFilterString:ProcessorFilterHLeftHalfMirror]
 								 forState: UIControlStateNormal];
+	[_filtersHistoryLabel setText:NSLocalizedString(@"Filters History:", @"filters history table view title")];
 	
+	// HUD setup
 	_hud = [[SIPHUDMessage alloc] init];
 	[self.view addSubview:_hud];
 	
@@ -280,7 +283,7 @@
 		[_filtersHistoryTableView endUpdates];
 	}];
 	
-	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"action to delete cell") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"cancel button") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	}];
 	
