@@ -173,14 +173,21 @@
 	[imageSourceAlert addAction:actionGallerySource];
 	[imageSourceAlert addAction:actionCancel];
 	
-	[self presentViewController:imageSourceAlert animated:YES completion:nil];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self presentViewController:imageSourceAlert animated:YES completion:nil];
+	});
 }
 
 // MARK: - Segue
 - (void)showImagePickerWithSourceType: (UIImagePickerControllerSourceType) sourceType {
-	SIPPhotoPickerViewController *photoPicker = [[SIPPhotoPickerViewController alloc] initWithSourceType:sourceType];
-	photoPicker.photoPickerDelegate = self;
-	[self.navigationController presentViewController:photoPicker animated:YES completion:nil];
+	
+	if ([UIImagePickerController isSourceTypeAvailable:sourceType]) {
+		SIPPhotoPickerViewController *photoPicker = [[SIPPhotoPickerViewController alloc] initWithSourceType:sourceType];
+		photoPicker.photoPickerDelegate = self;
+		[self.navigationController presentViewController:photoPicker animated:YES completion:nil];
+	} else {
+		[_hud showErrorWithMessage:NSLocalizedString(@"Source type unavailable", @"error message when camera/galley unavailable")];
+	}
 }
 
 // MARK: - PhotoPickerDelegate
@@ -194,7 +201,7 @@
 }
 
 - (void)photoPickerGotError:(NSString *)error {
-	
+	[_hud showErrorWithMessage:error];
 }
 
 // MARK: - UITableViewDataSource
@@ -226,6 +233,7 @@
 	// Check if cell is in loading process - do nothing
 	if (_processedObjects[indexPath.row].image == nil) {
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+		return;
 	}
 	
 	UIAlertController *optionsAlert = [UIAlertController alertControllerWithTitle:nil
@@ -234,11 +242,16 @@
 	UIAlertAction *chooseAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Pick this image", @"action to choose image as main image to apply filters") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 		UIImage *objectImage = _processedObjects[indexPath.row].image;
 		_chosenImageView.image = objectImage;
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	}];
 	
 	UIAlertAction *saveAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save image", @"action to save image to photo album") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 		UIImage *objectImage = _processedObjects[indexPath.row].image;
-		UIImageWriteToSavedPhotosAlbum(objectImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+		UIImageWriteToSavedPhotosAlbum(objectImage,
+									   self,
+									   @selector(image:didFinishSavingWithError:contextInfo:),
+									   nil);
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	}];
 	
 	UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", @"action to delete cell") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {

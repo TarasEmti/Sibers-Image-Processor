@@ -10,8 +10,8 @@
 
 @implementation SIPHUDMessage
 
-#define defaultFontSize 21
-#define increasedFontSize 27
+#define defaultFontSize 17
+#define increasedFontSize 25
 
 - (instancetype)init {
 	self = [super init];
@@ -40,9 +40,7 @@
 					 animations:^{
 						 self.alpha = 0.0;
 					 }
-					 completion:^(BOOL finished){
-						 [self setHidden:finished];
-					 }];
+					 completion:nil];
 }
 
 - (void)showErrorWithMessage:(NSString *)string {

@@ -43,7 +43,7 @@
 	return output;
 }
 
-- (UIImage *)rotateImageByDegrees: (int) degrees {
+- (UIImage *)rotateImageByDegrees:(int)degrees {
 	
 	float rotationAngle = - degrees * M_PI/180;
 	CIImage *ciimg = [CIImage imageWithCGImage: self.CGImage];

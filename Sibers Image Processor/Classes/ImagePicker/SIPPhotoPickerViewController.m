@@ -41,8 +41,11 @@
 	
 	UIImage *chosenImage = [info objectForKey:UIImagePickerControllerOriginalImage];
 	UIImage *fixedChosenImage = [chosenImage fixImageOrientation];
-	[_photoPickerDelegate photoPickerGotImage:fixedChosenImage];
-	
+	if (fixedChosenImage != nil) {
+		[_photoPickerDelegate photoPickerGotImage:fixedChosenImage];
+	} else {
+		[_photoPickerDelegate photoPickerGotError:NSLocalizedString(@"Could not find Photo", @"error from image picker - unable to find a photo")];
+	}
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
