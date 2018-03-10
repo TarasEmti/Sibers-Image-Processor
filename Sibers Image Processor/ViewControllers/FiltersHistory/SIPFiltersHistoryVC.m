@@ -33,6 +33,8 @@
 @property (strong, nonatomic) SIPImageProcessor *imageProcessor;
 @property (strong, nonatomic) SIPHUDMessage *hud;
 
+@property (assign, readonly) int newObjectIndex;
+
 @end
 
 @implementation SIPFiltersHistoryVC
@@ -86,6 +88,13 @@
 	self.filtersHistoryTableView.dataSource = self;
 }
 
+- (int)newObjectIndex {
+	// Here we can decide whether new cells will appear from top or from the bottom
+	// index = 0 - from top
+	// index = (_processedObjects.count - 1) - from bottom
+	return 0;
+}
+
 // MARK: - Actions
 - (IBAction)filterButtonTouchUp:(UIButton *)sender {
 	
@@ -110,23 +119,21 @@
 		return;
 	}
 	
-	// First - add a new row with nil Image
-	[_filtersHistoryTableView beginUpdates];
-	
 	SIPProcessedObject *newObject = [[SIPProcessedObject alloc] init];
 	newObject.image = nil;
 	newObject.processingProgress = 0.0;
 	
-	[_processedObjects addObject: newObject];
-	NSIndexPath *newObjectIndexPath = [NSIndexPath indexPathForRow: (_processedObjects.count-1)
+	[_processedObjects insertObject:newObject atIndex: self.newObjectIndex];
+	
+	[_filtersHistoryTableView beginUpdates];
+	NSIndexPath *newObjectIndexPath = [NSIndexPath indexPathForRow: self.newObjectIndex
 														 inSection: 0];
 	[_filtersHistoryTableView insertRowsAtIndexPaths: @[newObjectIndexPath]
-									withRowAnimation: UITableViewRowAnimationTop];
-	
+									withRowAnimation: UITableViewRowAnimationRight];
 	[_filtersHistoryTableView endUpdates];
 	
 	// Start a new thread to process image
-	// Again Objective-C cannot pass an filter enum value as an object to a thred, so I've made an NSNumber
+	// Again, Objective-C cannot pass an filter enum value as an object to a thred, so I've made an NSNumber
 	NSThread *newThread = [[NSThread alloc] initWithTarget: self
 												  selector: @selector(applyFilter:)
 													object: [NSNumber numberWithInt: filter]];
@@ -136,8 +143,8 @@
 - (void)applyFilter:(NSNumber *)filterInt {
 	
 	int filter = [filterInt intValue];
-	SIPProcessedObject *newObject = [_processedObjects lastObject];
-	// Second - apply filter and wait for a callback
+	SIPProcessedObject *newObject = _processedObjects[self.newObjectIndex];
+	
 	[_imageProcessor applyFilter:filter
 				   progressBlock:^(float progressFloat) {
 					   newObject.processingProgress = progressFloat;
