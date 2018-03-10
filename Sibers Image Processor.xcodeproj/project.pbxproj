@@ -12,6 +12,8 @@
 		7614053120502D7C00AE1980 /* SIPImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7614053020502D7C00AE1980 /* SIPImageProcessor.m */; };
 		7614053520503F1600AE1980 /* SIPProcessedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7614053420503F1600AE1980 /* SIPProcessedObject.m */; };
 		7614053B2053A76E00AE1980 /* SIPHUDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7614053A2053A76E00AE1980 /* SIPHUDMessage.m */; };
+		7614053F20540A6300AE1980 /* SIPPermissionsChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 7614053E20540A6300AE1980 /* SIPPermissionsChecker.m */; };
+		761405432054137600AE1980 /* UIAlertViewController + Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = 761405422054137600AE1980 /* UIAlertViewController + Ext.m */; };
 		76932285204D9E040066DDA9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76932284204D9E040066DDA9 /* AppDelegate.m */; };
 		7693228D204D9E040066DDA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7693228C204D9E040066DDA9 /* Assets.xcassets */; };
 		76932290204D9E040066DDA9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7693228E204D9E040066DDA9 /* LaunchScreen.storyboard */; };
@@ -35,6 +37,10 @@
 		7614053620503FB400AE1980 /* SIPImageProcessorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPImageProcessorDelegate.h; sourceTree = "<group>"; };
 		761405392053A76E00AE1980 /* SIPHUDMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPHUDMessage.h; sourceTree = "<group>"; };
 		7614053A2053A76E00AE1980 /* SIPHUDMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIPHUDMessage.m; sourceTree = "<group>"; };
+		7614053D20540A6300AE1980 /* SIPPermissionsChecker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPPermissionsChecker.h; sourceTree = "<group>"; };
+		7614053E20540A6300AE1980 /* SIPPermissionsChecker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIPPermissionsChecker.m; sourceTree = "<group>"; };
+		761405412054137600AE1980 /* UIAlertViewController + Ext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIAlertViewController + Ext.h"; sourceTree = "<group>"; };
+		761405422054137600AE1980 /* UIAlertViewController + Ext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIAlertViewController + Ext.m"; sourceTree = "<group>"; };
 		76932280204D9E040066DDA9 /* Sibers Image Processor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sibers Image Processor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		76932283204D9E040066DDA9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		76932284204D9E040066DDA9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -66,6 +72,7 @@
 		76140524204FC91400AE1980 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7614053C20540A3C00AE1980 /* AppPermissionsChecker */,
 				7614053220503EEB00AE1980 /* ProcessedImage */,
 				7614052E20502D5E00AE1980 /* ImageProcessor */,
 				7614052820501C8D00AE1980 /* ImagePicker */,
@@ -85,6 +92,7 @@
 		761405292050249C00AE1980 /* Utilites */ = {
 			isa = PBXGroup;
 			children = (
+				761405402054134E00AE1980 /* UIAlertController + Ext */,
 				7614052D20502D1200AE1980 /* UIImage + Ext */,
 			);
 			path = Utilites;
@@ -125,6 +133,24 @@
 				7614053A2053A76E00AE1980 /* SIPHUDMessage.m */,
 			);
 			path = HUDMessage;
+			sourceTree = "<group>";
+		};
+		7614053C20540A3C00AE1980 /* AppPermissionsChecker */ = {
+			isa = PBXGroup;
+			children = (
+				7614053D20540A6300AE1980 /* SIPPermissionsChecker.h */,
+				7614053E20540A6300AE1980 /* SIPPermissionsChecker.m */,
+			);
+			path = AppPermissionsChecker;
+			sourceTree = "<group>";
+		};
+		761405402054134E00AE1980 /* UIAlertController + Ext */ = {
+			isa = PBXGroup;
+			children = (
+				761405412054137600AE1980 /* UIAlertViewController + Ext.h */,
+				761405422054137600AE1980 /* UIAlertViewController + Ext.m */,
+			);
+			path = "UIAlertController + Ext";
 			sourceTree = "<group>";
 		};
 		76932277204D9E040066DDA9 = {
@@ -169,8 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				76BA9EBD204F851100A1DEB8 /* SIPFiltersHistoryVC.h */,
-				76BA9EBE204F851100A1DEB8 /* SIPFiltersHistoryVC.m */,
 				76BA9EBF204F851100A1DEB8 /* SIPFiltersHistoryVC.xib */,
+				76BA9EBE204F851100A1DEB8 /* SIPFiltersHistoryVC.m */,
 			);
 			path = FiltersHistory;
 			sourceTree = "<group>";
@@ -301,9 +327,11 @@
 				7614053520503F1600AE1980 /* SIPProcessedObject.m in Sources */,
 				76BA9ECE204FA23A00A1DEB8 /* SIPFiltersHistoryCell.m in Sources */,
 				76BA9EC6204F878600A1DEB8 /* SIPFilterButton.m in Sources */,
+				761405432054137600AE1980 /* UIAlertViewController + Ext.m in Sources */,
 				76140527204FC93900AE1980 /* SIPPhotoPickerViewController.m in Sources */,
 				7614053120502D7C00AE1980 /* SIPImageProcessor.m in Sources */,
 				76932285204D9E040066DDA9 /* AppDelegate.m in Sources */,
+				7614053F20540A6300AE1980 /* SIPPermissionsChecker.m in Sources */,
 				7614053B2053A76E00AE1980 /* SIPHUDMessage.m in Sources */,
 				7614052C205024D900AE1980 /* UIImage + Ext.m in Sources */,
 			);

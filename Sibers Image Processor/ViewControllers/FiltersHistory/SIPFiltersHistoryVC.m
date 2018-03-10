@@ -6,6 +6,7 @@
 //  Copyright © 2018 Taras Minin. All rights reserved.
 //
 
+#import "UIAlertViewController + Ext.h"
 #import "SIPFiltersHistoryVC.h"
 #import "SIPFilterButton.h"
 #import "SIPFiltersHistoryCell.h"
@@ -13,6 +14,7 @@
 #import "SIPImageProcessor.h"
 #import "SIPProcessedObject.h"
 #import "SIPHUDMessage.h"
+#import "SIPPermissionsChecker.h"
 
 @interface SIPFiltersHistoryVC () <UITableViewDelegate, UITableViewDataSource, PhotoPickerDelegate>
 
@@ -121,6 +123,7 @@
 	[_filtersHistoryTableView endUpdates];
 	
 	// Start a new thread to process image
+	// Again Objective-C cannot pass an filter enum value as an object to a thred, so I've made an NSNumber
 	NSThread *newThread = [[NSThread alloc] initWithTarget: self
 												  selector: @selector(applyFilter:)
 													object: [NSNumber numberWithInt: filter]];
@@ -151,7 +154,12 @@
 		NSIndexPath *objectIndexPath = [NSIndexPath indexPathForRow: row
 														  inSection: 0];
 		_processedObjects[row] = object;
-		[_filtersHistoryTableView reloadRowsAtIndexPaths:@[objectIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+		// Check if we can see that cell at indexPath
+		if ([[_filtersHistoryTableView indexPathsForVisibleRows] indexOfObject:objectIndexPath] == NSNotFound) {
+			return;
+		} else {
+			[_filtersHistoryTableView reloadRowsAtIndexPaths:@[objectIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+		}
 	});
 }
 
@@ -160,11 +168,23 @@
 	UIAlertController *imageSourceAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Choose image source", @"choose image source alert title") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
 	
 	UIAlertAction *actionCameraSource = [UIAlertAction actionWithTitle:NSLocalizedString(@"Camera", @"camera source type") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-		[self showImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+		if ([SIPPermissionsChecker isCameraAvailable]) {
+			[self showImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+		} else {
+			UIAlertController *alert = [UIAlertController alertWithTitle:NSLocalizedString(@"Warning", @"alert warning title")
+																 message:NSLocalizedString(@"Permission to camera is denied. Please, turn it on from your phone Settings.", @"how to enable camera permission info")];
+			[self presentViewController:alert animated:YES completion:nil];
+		}
 	}];
 	
 	UIAlertAction *actionGallerySource = [UIAlertAction actionWithTitle:NSLocalizedString(@"Gallery", @"gallery source type") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-		[self showImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+		if ([SIPPermissionsChecker isPhotosAlbumUsageAvailable]) {
+			[self showImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+		} else {
+			UIAlertController *alert = [UIAlertController alertWithTitle:NSLocalizedString(@"Warning", @"alert warning title")
+																 message:NSLocalizedString(@"Permission to Photos is denied. Please, turn it on from your phone Settings.", @"how to enable photos album permission info")];
+			[self presentViewController:alert animated:YES completion:nil];
+		}
 	}];
 	
 	UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"cancel button") style:UIAlertActionStyleCancel handler:nil];
@@ -173,9 +193,7 @@
 	[imageSourceAlert addAction:actionGallerySource];
 	[imageSourceAlert addAction:actionCancel];
 	
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[self presentViewController:imageSourceAlert animated:YES completion:nil];
-	});
+	[self presentViewController:imageSourceAlert animated:YES completion:nil];
 }
 
 // MARK: - Segue
