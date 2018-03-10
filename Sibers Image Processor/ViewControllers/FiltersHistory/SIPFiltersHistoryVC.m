@@ -12,6 +12,7 @@
 #import "SIPPhotoPickerViewController.h"
 #import "SIPImageProcessor.h"
 #import "SIPProcessedObject.h"
+#import "SIPHUDMessage.h"
 
 @interface SIPFiltersHistoryVC () <UITableViewDelegate, UITableViewDataSource, PhotoPickerDelegate>
 
@@ -23,11 +24,11 @@
 @property (weak, nonatomic) IBOutlet SIPFilterButton *inverseFlterButton;
 @property (weak, nonatomic) IBOutlet SIPFilterButton *hMirrorFilterButton;
 @property (weak, nonatomic) IBOutlet SIPFilterButton *leftHalfMirrorFilterButton;
-
 @property (weak, nonatomic) IBOutlet SIPFilterButton *pickImageButton;
 
-@property (strong, nonatomic) NSArray<SIPProcessedObject *> *processedObjects;
+@property (strong, nonatomic) NSMutableArray<SIPProcessedObject *> *processedObjects;
 @property (strong, nonatomic) SIPImageProcessor *imageProcessor;
+@property (strong, nonatomic) SIPHUDMessage *hud;
 
 @end
 
@@ -35,7 +36,7 @@
 
 // Cells height
 #define kCellLoadingHeight 30.f
-#define kCellReadyHeight 100.f
+#define kCellReadyHeight 150.f
 
 // MARK: - Lifecycle
 - (void)viewDidLoad {
@@ -56,16 +57,19 @@
 	[_leftHalfMirrorFilterButton setTitle: [SIPImageProcessor processorFilterString:ProcessorFilterHLeftHalfMirror]
 								 forState: UIControlStateNormal];
 	
-	self.filtersHistoryTableView.layer.borderColor = [UIColor blackColor].CGColor;
-	self.filtersHistoryTableView.layer.borderWidth = 1.0;
-	self.filtersHistoryTableView.tableFooterView = [[UIView alloc] init];
+	_hud = [[SIPHUDMessage alloc] init];
+	[self.view addSubview:_hud];
 	
 	// Implement choosing image button
 	[_pickImageButton setTitle:NSLocalizedString(@"Choose image", @"choose image button title") forState: UIControlStateNormal];
 	_pickImageButton.backgroundColor = [UIColor clearColor];
 	
 	// History preload (from CoreData maybe)
-	_processedObjects = [[NSArray alloc] init];
+	_processedObjects = [[NSMutableArray alloc] init];
+	
+	self.filtersHistoryTableView.layer.borderColor = [UIColor blackColor].CGColor;
+	self.filtersHistoryTableView.layer.borderWidth = 1.0;
+	self.filtersHistoryTableView.tableFooterView = [[UIView alloc] init];
 	
 	// Register our cell
 	NSString *filterCellName = NSStringFromClass(SIPFiltersHistoryCell.self);
@@ -77,15 +81,11 @@
 	self.filtersHistoryTableView.dataSource = self;
 }
 
-- (void)viewDidLayoutSubviews {
-	// Place button below image view
-	_pickImageButton.frame = _chosenImageView.frame;
-}
-
 // MARK: - Actions
 - (IBAction)filterButtonTouchUp:(UIButton *)sender {
 	
 	if (_chosenImageView.image == nil) {
+		[_hud showErrorWithMessage:NSLocalizedString(@"No Image", @"error text when there is no image to process")];
 		return;
 	}
 	_imageProcessor = [[SIPImageProcessor alloc] initWithImage:_chosenImageView.image];
@@ -107,19 +107,23 @@
 	
 	// First - add a new row with nil Image
 	[_filtersHistoryTableView beginUpdates];
-	NSMutableArray *tempArray = [NSMutableArray arrayWithArray:_processedObjects];
+	
 	SIPProcessedObject *newObject = [[SIPProcessedObject alloc] init];
 	newObject.image = nil;
 	newObject.processingProgress = 0.0;
-	[tempArray addObject:newObject];
-	_processedObjects = [NSArray arrayWithArray:tempArray];
-	[_filtersHistoryTableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
-									withRowAnimation:UITableViewRowAnimationTop];
-	[_filtersHistoryTableView reloadData];
+	
+	[_processedObjects addObject: newObject];
+	NSIndexPath *newObjectIndexPath = [NSIndexPath indexPathForRow: (_processedObjects.count-1)
+														 inSection: 0];
+	[_filtersHistoryTableView insertRowsAtIndexPaths: @[newObjectIndexPath]
+									withRowAnimation: UITableViewRowAnimationTop];
+	
 	[_filtersHistoryTableView endUpdates];
 	
 	// Start a new thread to process image
-	NSThread *newThread = [[NSThread alloc] initWithTarget:self selector:@selector(applyFilter:) object:[NSNumber numberWithInt:filter]];
+	NSThread *newThread = [[NSThread alloc] initWithTarget: self
+												  selector: @selector(applyFilter:)
+													object: [NSNumber numberWithInt: filter]];
 	[newThread start];
 }
 
@@ -129,27 +133,26 @@
 	SIPProcessedObject *newObject = [_processedObjects lastObject];
 	// Second - apply filter and wait for a callback
 	[_imageProcessor applyFilter:filter
-				   progressBlock:^(CGFloat progressFloat) {
+				   progressBlock:^(float progressFloat) {
 					   newObject.processingProgress = progressFloat;
 					   [self updateCellWithObject:newObject];
 				   }
 				 completionBlock:^(UIImage *outputImage) {
-					 newObject.image = outputImage;
-					 [self updateCellWithObject:newObject];
+					newObject.image = [[UIImage alloc] initWithCGImage:outputImage.CGImage];;
+					[self updateCellWithObject:newObject];
 				 }
 	 ];
 }
 
 - (void)updateCellWithObject:(SIPProcessedObject *)object {
 	dispatch_async(dispatch_get_main_queue(), ^{
-		NSUInteger index = [_processedObjects indexOfObject:object];
-		NSUInteger row = [self rowForObjectAtIndex:index];
-		[_filtersHistoryTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:row inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+		
+		NSUInteger row = [_processedObjects indexOfObject:object];
+		NSIndexPath *objectIndexPath = [NSIndexPath indexPathForRow: row
+														  inSection: 0];
+		_processedObjects[row] = object;
+		[_filtersHistoryTableView reloadRowsAtIndexPaths:@[objectIndexPath] withRowAnimation:UITableViewRowAnimationNone];
 	});
-}
-
-- (NSUInteger)rowForObjectAtIndex:(NSUInteger)index {
-	return (_processedObjects.count - index - 1);
 }
 
 - (IBAction)pickImageButtonTouchUp:(id)sender {
@@ -183,8 +186,11 @@
 // MARK: - PhotoPickerDelegate
 - (void)photoPickerGotImage:(UIImage *)image {
 	_chosenImageView.image = image;
-	_imageProcessor = [[SIPImageProcessor alloc] initWithImage:image];
-	[_pickImageButton setTitle:@"" forState:UIControlStateNormal];
+	
+	// Hide button title
+	if (_pickImageButton.titleLabel.text.length > 0) {
+		[_pickImageButton setTitle:@"" forState:UIControlStateNormal];
+	}
 }
 
 - (void)photoPickerGotError:(NSString *)error {
@@ -196,12 +202,8 @@
 	
 	SIPFiltersHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier: NSStringFromClass(SIPFiltersHistoryCell.self)
 																  forIndexPath: indexPath];
-	SIPProcessedObject *object = _processedObjects[[self rowForObjectAtIndex:indexPath.row]];
-	if (object.image != nil) {
-		cell.filteredImage = object.image;
-	} else {
-		cell.progressBar.progress = object.processingProgress;
-	}
+	SIPProcessedObject *object = _processedObjects[indexPath.row];
+	[cell fillWithProcessedObject: object];
 	return cell;
 }
 
@@ -218,4 +220,49 @@
 	return self.processedObjects.count;
 }
 
+// MARK: - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	// Check if cell is in loading process - do nothing
+	if (_processedObjects[indexPath.row].image == nil) {
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	}
+	
+	UIAlertController *optionsAlert = [UIAlertController alertControllerWithTitle:nil
+																	 message:nil
+															  preferredStyle:UIAlertControllerStyleActionSheet];
+	UIAlertAction *chooseAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Pick this image", @"action to choose image as main image to apply filters") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		UIImage *objectImage = _processedObjects[indexPath.row].image;
+		_chosenImageView.image = objectImage;
+	}];
+	
+	UIAlertAction *saveAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save image", @"action to save image to photo album") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		UIImage *objectImage = _processedObjects[indexPath.row].image;
+		UIImageWriteToSavedPhotosAlbum(objectImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+	}];
+	
+	UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Delete", @"action to delete cell") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+		
+		[_filtersHistoryTableView beginUpdates];
+		[_processedObjects removeObjectAtIndex:indexPath.row];
+		[_filtersHistoryTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+		[_filtersHistoryTableView endUpdates];
+	}];
+	
+	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"action to delete cell") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	}];
+	
+	[optionsAlert addAction:chooseAction];
+	[optionsAlert addAction:saveAction];
+	[optionsAlert addAction:deleteAction];
+	[optionsAlert addAction:cancelAction];
+	
+	[self presentViewController:optionsAlert animated:YES completion:nil];
+}
+
+// MARK: - Callbacks
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+	[_hud showSuccess];
+}
 @end

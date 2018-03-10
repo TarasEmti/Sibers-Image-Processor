@@ -20,8 +20,9 @@ typedef enum {
 
 @interface SIPImageProcessor: NSObject
 
-- (instancetype _Nonnull)initWithImage: (UIImage *_Nullable)image;
 + (NSString *_Nonnull)processorFilterString:(ProcessorFilter)filter;
-- (void)applyFilter:(ProcessorFilter)filter progressBlock:(void (^_Nonnull)(CGFloat))progress completionBlock:(void (^_Nullable)(UIImage *_Nonnull))completion;
+
+- (instancetype _Nonnull)initWithImage: (UIImage *_Nullable)image;
+- (void)applyFilter:(ProcessorFilter)filter progressBlock:(void (^_Nonnull)(float))progress completionBlock:(void (^_Nullable)(UIImage *_Nonnull))completion;
 
 @end

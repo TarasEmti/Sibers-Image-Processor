@@ -11,6 +11,7 @@
 		7614052C205024D900AE1980 /* UIImage + Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = 7614052B205024D900AE1980 /* UIImage + Ext.m */; };
 		7614053120502D7C00AE1980 /* SIPImageProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7614053020502D7C00AE1980 /* SIPImageProcessor.m */; };
 		7614053520503F1600AE1980 /* SIPProcessedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 7614053420503F1600AE1980 /* SIPProcessedObject.m */; };
+		7614053B2053A76E00AE1980 /* SIPHUDMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7614053A2053A76E00AE1980 /* SIPHUDMessage.m */; };
 		76932285204D9E040066DDA9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 76932284204D9E040066DDA9 /* AppDelegate.m */; };
 		7693228D204D9E040066DDA9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7693228C204D9E040066DDA9 /* Assets.xcassets */; };
 		76932290204D9E040066DDA9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7693228E204D9E040066DDA9 /* LaunchScreen.storyboard */; };
@@ -32,6 +33,8 @@
 		7614053320503F1600AE1980 /* SIPProcessedObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPProcessedObject.h; sourceTree = "<group>"; };
 		7614053420503F1600AE1980 /* SIPProcessedObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIPProcessedObject.m; sourceTree = "<group>"; };
 		7614053620503FB400AE1980 /* SIPImageProcessorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPImageProcessorDelegate.h; sourceTree = "<group>"; };
+		761405392053A76E00AE1980 /* SIPHUDMessage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SIPHUDMessage.h; sourceTree = "<group>"; };
+		7614053A2053A76E00AE1980 /* SIPHUDMessage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SIPHUDMessage.m; sourceTree = "<group>"; };
 		76932280204D9E040066DDA9 /* Sibers Image Processor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sibers Image Processor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		76932283204D9E040066DDA9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		76932284204D9E040066DDA9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -63,7 +66,6 @@
 		76140524204FC91400AE1980 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				761405372052340900AE1980 /* TimerDelay */,
 				7614053220503EEB00AE1980 /* ProcessedImage */,
 				7614052E20502D5E00AE1980 /* ImageProcessor */,
 				7614052820501C8D00AE1980 /* ImagePicker */,
@@ -116,11 +118,13 @@
 			path = ProcessedImage;
 			sourceTree = "<group>";
 		};
-		761405372052340900AE1980 /* TimerDelay */ = {
+		761405382053A74100AE1980 /* HUDMessage */ = {
 			isa = PBXGroup;
 			children = (
+				761405392053A76E00AE1980 /* SIPHUDMessage.h */,
+				7614053A2053A76E00AE1980 /* SIPHUDMessage.m */,
 			);
-			path = TimerDelay;
+			path = HUDMessage;
 			sourceTree = "<group>";
 		};
 		76932277204D9E040066DDA9 = {
@@ -174,6 +178,7 @@
 		76BA9EC7204F879000A1DEB8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				761405382053A74100AE1980 /* HUDMessage */,
 				76BA9EC8204F879F00A1DEB8 /* FilterButton */,
 				76BA9ED0204FA23F00A1DEB8 /* FiltersHistoryCell */,
 			);
@@ -299,6 +304,7 @@
 				76140527204FC93900AE1980 /* SIPPhotoPickerViewController.m in Sources */,
 				7614053120502D7C00AE1980 /* SIPImageProcessor.m in Sources */,
 				76932285204D9E040066DDA9 /* AppDelegate.m in Sources */,
+				7614053B2053A76E00AE1980 /* SIPHUDMessage.m in Sources */,
 				7614052C205024D900AE1980 /* UIImage + Ext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

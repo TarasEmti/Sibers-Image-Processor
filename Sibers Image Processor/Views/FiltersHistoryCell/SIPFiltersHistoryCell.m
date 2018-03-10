@@ -8,9 +8,15 @@
 
 #import "SIPFiltersHistoryCell.h"
 
+typedef enum {
+	ProcessedImageCellStateReady,
+	ProcessedImageCellStateLoading
+} ProcessedImageCellState;
+
 @interface SIPFiltersHistoryCell ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *processedImage;
+@property (weak, nonatomic) IBOutlet UIImageView *processedImageView;
+@property (assign, nonatomic) ProcessedImageCellState state;
 
 @end
 
@@ -18,24 +24,31 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-	_processedImage.image = nil;
-	self.state = ProcessedImageCellStateLoading;
+	_processedImageView.image = nil;
+	_state = ProcessedImageCellStateLoading;
 }
 
-- (void)setFilteredImage:(UIImage *)filteredImage {
-	[_processedImage setImage:filteredImage];
-	self.state = ProcessedImageCellStateReady;
+- (void)fillWithProcessedObject:(SIPProcessedObject *)object {
+	if (object.image != nil) {
+		_processedImageView.image = object.image;
+		_state = ProcessedImageCellStateReady;
+	} else {
+		_processedImageView.image = nil;
+		_progressBar.progress = object.processingProgress;
+		_state = ProcessedImageCellStateLoading;
+	}
+	// Don't know why setter for enum property is not working. Let's call it manually
+	[self setState:_state];
 }
 
 - (void)setState:(ProcessedImageCellState)state {
 	switch (state) {
 		case ProcessedImageCellStateReady:
-			[_processedImage setHidden: NO];
+			[_processedImageView setHidden: NO];
 			[_progressBar setHidden: YES];
-			[_progressBar setProgress: 0];
 			break;
 		case ProcessedImageCellStateLoading:
-			[_processedImage setHidden: YES];
+			[_processedImageView setHidden: YES];
 			[_progressBar setHidden: NO];
 			break;
 	}

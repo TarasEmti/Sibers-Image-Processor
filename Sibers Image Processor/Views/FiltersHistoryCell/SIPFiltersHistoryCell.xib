@@ -21,13 +21,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="383" height="225.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fNC-jx-Bq9">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fNC-jx-Bq9">
                         <rect key="frame" x="89" y="11" width="204" height="204"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="fNC-jx-Bq9" secondAttribute="height" multiplier="1:1" id="A9A-hL-1Eb"/>
                         </constraints>
                     </imageView>
-                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="gcj-qT-SZ5">
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="gcj-qT-SZ5">
                         <rect key="frame" x="16" y="112" width="351" height="2"/>
                     </progressView>
                 </subviews>
@@ -42,7 +42,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
-                <outlet property="processedImage" destination="fNC-jx-Bq9" id="2uz-GU-waE"/>
+                <outlet property="processedImageView" destination="fNC-jx-Bq9" id="cPw-N1-GS3"/>
                 <outlet property="progressBar" destination="gcj-qT-SZ5" id="62h-H5-y0l"/>
             </connections>
             <point key="canvasLocation" x="56.5" y="143"/>

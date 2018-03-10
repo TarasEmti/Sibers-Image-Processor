@@ -9,6 +9,6 @@
 @protocol SIPImageProcessorDelegate <NSObject>
 
 - (void)imageProcessorDoneProcessingImage: (UIImage *)image;
-- (void)imageProcessorProcessingImage: (CGFloat)progress;
+- (void)imageProcessorProcessingImage: (float)progress;
 
 @end

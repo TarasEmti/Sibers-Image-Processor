@@ -11,7 +11,7 @@
 
 @interface SIPProcessedObject: NSObject
 
-@property (weak, nonatomic) UIImage *image;
-@property (assign) CGFloat processingProgress;
+@property (strong, nonatomic) UIImage *image;
+@property (assign) float processingProgress;
 
 @end

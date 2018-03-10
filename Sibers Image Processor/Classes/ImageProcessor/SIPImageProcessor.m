@@ -26,7 +26,7 @@
 	return self;
 }
 
-- (void)applyFilter:(ProcessorFilter)filter progressBlock:(void (^_Nonnull)(CGFloat))progress completionBlock:(void (^_Nullable)(UIImage *))completion {
+- (void)applyFilter:(ProcessorFilter)filter progressBlock:(void (^_Nonnull)(float))progress completionBlock:(void (^_Nullable)(UIImage *))completion {
 	
 	dispatch_group_t filterProcessing = dispatch_group_create();
 	
@@ -35,20 +35,25 @@
 	__block UIImage *output;
 	
 	dispatch_group_enter(filterProcessing);
-	[self filterProcessing:filter completionBlock:^(UIImage *filteredImage) {
-		output = filteredImage;
-		dispatch_group_leave(filterProcessing);
-	}];
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0ul), ^{
+		[self filterProcessing:filter completionBlock:^(UIImage *filteredImage) {
+			output = filteredImage;
+			dispatch_group_leave(filterProcessing);
+		}];
+	});
 	
 	dispatch_group_enter(filterProcessing);
-	[self simulateProgress:delay progressBlock:^(CGFloat progressFloat) {
+	[self simulateProgress:delay progressBlock:^(float progressFloat) {
 		progress(progressFloat);
 	} completionBlock:^{
 		dispatch_group_leave(filterProcessing);
 	}];
 	
 	dispatch_group_notify(filterProcessing, dispatch_get_main_queue(), ^{
-		completion(output);
+		progress(1.0);
+		if (output != nil) {
+			completion(output);
+		}
 	});
 }
 
@@ -78,12 +83,12 @@
 	completion(output);
 }
 
-- (void)simulateProgress:(int)delay progressBlock:(void (^_Nonnull)(CGFloat))progress completionBlock:(void (^_Nullable)(void))completion {
+- (void)simulateProgress:(int)delay progressBlock:(void (^_Nonnull)(float))progress completionBlock:(void (^_Nullable)(void))completion {
 	
-	CGFloat timePassed = 0.0;
+	float timePassed = updateInterval;
 	while (timePassed < delay) {
 		[NSThread sleepForTimeInterval: updateInterval];
-		CGFloat prog = timePassed / delay;
+		float prog = timePassed / delay;
 		dispatch_async(dispatch_get_main_queue(), ^{
 			progress(prog);
 		});
@@ -174,7 +179,8 @@
 
 - (UIImage *)mirrorLeftHalfImage {
 	
-	CGImageRef ciimg = _processedImage.CGImage;
+	UIImage *image = _processedImage;
+	CGImageRef ciimg = image.CGImage;
 	
 	CGContextRef ctx = CGBitmapContextCreate(NULL,
 											 CGImageGetWidth(ciimg),
@@ -186,8 +192,8 @@
 	
 	CGRect cropRect = CGRectMake(0,
 								 0,
-								 _processedImage.size.width/2,
-								 _processedImage.size.height);
+								 image.size.width/2,
+								 image.size.height);
 	
 	CGImageRef otherHalf = CGImageCreateWithImageInRect(ciimg, cropRect);
 	
@@ -197,7 +203,7 @@
 									   CGImageGetHeight(ciimg)),
 					   ciimg);
 	
-	CGAffineTransform t = CGAffineTransformMakeTranslation(_processedImage.size.width, 0.0);
+	CGAffineTransform t = CGAffineTransformMakeTranslation(image.size.width, 0.0);
 	t = CGAffineTransformScale(t, -1.0, 1.0);
 	CGContextConcatCTM(ctx, t);
 	CGContextDrawImage(ctx, cropRect, otherHalf);

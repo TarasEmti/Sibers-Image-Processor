@@ -7,15 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef enum {
-	ProcessedImageCellStateReady,
-	ProcessedImageCellStateLoading
-} ProcessedImageCellState;
+#import "SIPProcessedObject.h"
 
 @interface SIPFiltersHistoryCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UIProgressView *progressBar;
-@property (assign, nonatomic) ProcessedImageCellState state;
-@property (weak, nonatomic) UIImage *filteredImage;
+
+- (void)fillWithProcessedObject:(SIPProcessedObject *)object;
 
 @end

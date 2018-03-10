@@ -10,5 +10,12 @@
 
 @implementation SIPProcessedObject
 
+- (void) setImage:(UIImage *)image {
+	
+	// Do not let rewrite processed image
+	if (_image == nil) {
+		_image = image;
+	}
+}
 
 @end
